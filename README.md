@@ -32,30 +32,58 @@ and betrayal optimization in hierarchical networks.
    - Manages simulation lifecycle and events
    - Provides visualization and analysis output
 
+6. **AdvancedStrategies** (advanced_strategies.h/cpp) 
+   - Coalition formation algorithms
+   - Multi-step dominance planning
+   - Network manipulation tactics (isolation, divide-and-conquer)
+   - Bridge node detection for strategic fragmentation
+
 ## Build Instructions
+
+### Basic Build
 ```bash
 # Using Make
-make
+make clean && make
 make run
 
 # Manual compilation
-g++ -std=c++17 -Wall -O2 main.cpp node.cpp edge.cpp \
-    influence_network.cpp betrayal_strategy.cpp simulator.cpp \
-    -o influence_network_sim
+g++ -std=c++17 -Wall -O2 -o influence_sim \
+    main.cpp node.cpp edge.cpp influence_network.cpp \
+    betrayal_strategy.cpp simulator.cpp
 
 # Execute
-./influence_network_sim
+./influence_sim
+```
+
+### Advanced Build
+```bash
+# With advanced strategies
+g++ -std=c++17 -Wall -O2 -o influence_sim \
+    main.cpp node.cpp edge.cpp influence_network.cpp \
+    betrayal_strategy.cpp simulator.cpp advanced_strategies.cpp
+
+# Execute
+./influence_sim
 ```
 
 ## Key Features
 
+### Core Features
 - **Power Propagation**: Influence flows through network based on relationship types
 - **Betrayal Optimization**: Identifies highest ROI betrayal opportunities
 - **Dynamic Events**: Random events affect network state
 - **Strategic Analysis**: Centrality, vulnerability, and control metrics
 - **Relationship Management**: Multiple edge types with different behaviors
 
+### Advanced Features
+- **Coalition Formation**: Automatic detection and creation of optimal alliances
+- **Multi-Step Planning**: Long-term strategic path calculation for dominance
+- **Network Manipulation**: Isolation tactics and divide-and-conquer strategies
+- **Bridge Analysis**: Identification of critical nodes for network fragmentation
+
 ## Usage Example
+
+### Basic Usage
 ```cpp
 Simulator sim(20);  // 20 turns
 
@@ -72,6 +100,26 @@ sim.run_simulation();
 // Analyze and execute betrayals
 sim.print_betrayal_opportunities(deputy);
 sim.execute_optimal_betrayal_for(deputy);
+```
+
+### Advanced Usage
+```cpp
+#include "advanced_strategies.h"
+
+InfluenceNetwork network;
+AdvancedStrategies advanced(network);
+
+// Form optimal coalition
+auto coalition = advanced.form_optimal_coalition(agent_id, 4);
+
+// Plan multi-step dominance
+auto plan = advanced.plan_dominance_path(agent_id, 10);
+
+// Execute divide and conquer
+advanced.execute_divide_and_conquer(agent_id);
+
+// Detect existing coalitions
+auto coalitions = advanced.detect_existing_coalitions();
 ```
 
 ## Algorithm Details
@@ -93,6 +141,13 @@ P(success) = 0.5 * (betrayer_power / target_power)
 ROI = expected_gain / (base_cost + ally_cost + risk_cost)
 ```
 
+### Coalition Compatibility Score
+```
+compatibility = power * 0.4 
+              + loyalty * 0.3 
+              + existing_relationship_bonus
+```
+
 ## Customization
 
 Modify parameters in respective classes:
@@ -100,23 +155,34 @@ Modify parameters in respective classes:
 - Influence flow coefficients (Edge)
 - Propagation depth (InfluenceNetwork)
 - Success probability weights (BetrayalStrategy)
+- Coalition cohesion factors (AdvancedStrategies)
 
 ## File Structure
 ```
 influence_network_sim/
-├── node.h
-├── node.cpp
-├── edge.h
-├── edge.cpp
-├── influence_network.h
-├── influence_network.cpp
-├── betrayal_strategy.h
-├── betrayal_strategy.cpp
-├── simulator.h
-├── simulator.cpp
-├── main.cpp
-├── Makefile
-└── README.md
+├── Core Components
+│   ├── node.h
+│   ├── node.cpp
+│   ├── edge.h
+│   ├── edge.cpp
+│   ├── influence_network.h
+│   └── influence_network.cpp
+│
+├── Strategic Layer
+│   ├── betrayal_strategy.h
+│   ├── betrayal_strategy.cpp
+│   ├── advanced_strategies.h
+│   └── advanced_strategies.cpp
+│
+├── Simulation
+│   ├── simulator.h
+│   ├── simulator.cpp
+│   └── main.cpp
+│
+└── Documentation
+    ├── Makefile
+    ├── README.md
+    └── .gitignore
 ```
 
 ## Design Principles
@@ -125,15 +191,58 @@ influence_network_sim/
 - **Extensibility**: Easy to add new edge types or strategies
 - **Performance**: Efficient graph operations with proper data structures
 - **Clarity**: Clear separation between data, logic, and presentation
+- **Scalability**: Bonus module demonstrates expandable architecture
+
+## Advanced Module Features
+
+### Coalition System
+- **Automatic Detection**: Identifies existing power blocs in the network
+- **Optimal Formation**: Creates coalitions based on compatibility scores
+- **Cohesion Tracking**: Monitors alliance stability over time
+
+### Multi-Step Planning
+- **Dominance Paths**: Calculates optimal sequence of betrayals
+- **Horizon Analysis**: Simulates future network states
+- **Cumulative Gain**: Tracks long-term strategic value
+
+### Network Manipulation
+- **Target Isolation**: Systematically removes victim's support structure
+- **Bridge Identification**: Finds critical nodes for network control
+- **Divide & Conquer**: Fragments opposing coalitions strategically
+
+## Performance Notes
+
+- Network size: Optimized for 5-50 nodes
+- Propagation depth: Limited to 3 levels for performance
+- Turn complexity: O(N * E) where N=nodes, E=edges
+- Memory: Approximately O(N²) for dense networks
+- Coalition detection: O(N²) worst case
+- Multi-step planning: O(H * N) where H=horizon depth
 
 ## Future Enhancements
 
-- Coalition formation algorithms
-- Multi-agent simultaneous betrayals
-- Network evolution over long time horizons
 - Machine learning for strategy optimization
-- Visualization with graph rendering
+- Parallel coalition negotiations
+- Network evolution over extended time horizons
+- Visualization with graph rendering libraries
+- Persistent state storage and replay system
+- Multi-threaded betrayal simulation
+
+## Requirements
+
+- C++17 or later
+- Standard library only (no external dependencies)
+- Compatible with GCC, Clang, MSVC
 
 ## License
 
 This is a simulation framework for educational and research purposes.
+
+## Contributing
+
+Contributions are welcome! Areas of interest:
+- New edge types and relationship dynamics
+- Alternative betrayal metrics
+- Visualization implementations
+- Performance optimizations
+- Additional strategic patterns
